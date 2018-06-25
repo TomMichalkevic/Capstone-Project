@@ -1,7 +1,10 @@
 package com.tomasmichalkevic.seevilnius;
 
+import android.animation.ArgbEvaluator;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -16,7 +19,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.tomasmichalkevic.seevilnius.utils.Utilities;
+//
+//Code heavily influenced from:
+//https://github.com/Suleiman19/Android-Material-Design-for-pre-Lollipop/blob/master/MaterialSample/app/src/main/java/com/suleiman/material/activities/PagerActivity.java
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -34,31 +45,132 @@ public class WelcomeActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    ImageButton mNextBtn;
+    Button mSkipBtn, mFinishBtn;
+    ImageView zero, one, two;
+    CoordinatorLayout mCoordinator;
+    ImageView[] indicators;
+    int page = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         setContentView(R.layout.activity_welcome);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        mNextBtn = (ImageButton) findViewById(R.id.intro_btn_next);
+        mSkipBtn = (Button) findViewById(R.id.intro_btn_skip);
+        mFinishBtn = (Button) findViewById(R.id.intro_btn_finish);
+
+        zero = (ImageView) findViewById(R.id.intro_indicator_0);
+        one = (ImageView) findViewById(R.id.intro_indicator_1);
+        two = (ImageView) findViewById(R.id.intro_indicator_2);
+
+        mCoordinator = (CoordinatorLayout) findViewById(R.id.main_content);
+
+        indicators = new ImageView[]{zero, one, two};
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mViewPager.setCurrentItem(page);
+        updateIndicators(page);
+
+        final int color1 = ContextCompat.getColor(this, R.color.cyan);
+        final int color2 = ContextCompat.getColor(this, R.color.orange);
+        final int color3 = ContextCompat.getColor(this, R.color.green);
+
+        final int[] colorList = new int[]{color1, color2, color3};
+
+        final ArgbEvaluator evaluator = new ArgbEvaluator();
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                /*
+                color update
+                 */
+                int colorUpdate = (Integer) evaluator.evaluate(positionOffset, colorList[position], colorList[position == 2 ? position : position + 1]);
+                mViewPager.setBackgroundColor(colorUpdate);
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+                page = position;
+
+                updateIndicators(page);
+
+                switch (position) {
+                    case 0:
+                        mViewPager.setBackgroundColor(color1);
+                        break;
+                    case 1:
+                        mViewPager.setBackgroundColor(color2);
+                        break;
+                    case 2:
+                        mViewPager.setBackgroundColor(color3);
+                        break;
+                }
+
+
+                mNextBtn.setVisibility(position == 2 ? View.GONE : View.VISIBLE);
+                mFinishBtn.setVisibility(position == 2 ? View.VISIBLE : View.GONE);
+
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
 
+        mNextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                page += 1;
+                mViewPager.setCurrentItem(page, true);
+            }
+        });
+
+        mSkipBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                finish();
+                Utilities.saveSharedSetting(WelcomeActivity.this, MainActivity.PREF_USER_FIRST_TIME, "false");
+            }
+        });
+
+        mFinishBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                //  update 1st time pref
+                Utilities.saveSharedSetting(WelcomeActivity.this, MainActivity.PREF_USER_FIRST_TIME, "false");
+
+            }
+        });
+
+
+    }
+
+    void updateIndicators(int position) {
+        for (int i = 0; i < indicators.length; i++) {
+            indicators[i].setBackgroundResource(
+                    i == position ? R.drawable.indicator_selected : R.drawable.indicator_unselected
+            );
+        }
     }
 
 
@@ -94,6 +206,10 @@ public class WelcomeActivity extends AppCompatActivity {
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
+        ImageView img;
+
+        int[] bgs = new int[]{R.drawable.ic_flight_24dp, R.drawable.ic_mail_24dp, R.drawable.ic_explore_24dp};
+
         public PlaceholderFragment() {
         }
 
@@ -115,6 +231,11 @@ public class WelcomeActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_welcome, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
+            img = (ImageView) rootView.findViewById(R.id.section_img);
+            img.setBackgroundResource(bgs[getArguments().getInt(ARG_SECTION_NUMBER) - 1]);
+
+
             return rootView;
         }
     }
@@ -134,12 +255,26 @@ public class WelcomeActivity extends AppCompatActivity {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             return PlaceholderFragment.newInstance(position + 1);
+
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
             return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "SECTION 1";
+                case 1:
+                    return "SECTION 2";
+                case 2:
+                    return "SECTION 3";
+            }
+            return null;
         }
     }
 }
