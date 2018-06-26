@@ -25,67 +25,48 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tomasmichalkevic.seevilnius.utils.Utilities;
+
+import butterknife.BindColor;
+import butterknife.BindString;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 //
 //Code heavily influenced from:
 //https://github.com/Suleiman19/Android-Material-Design-for-pre-Lollipop/blob/master/MaterialSample/app/src/main/java/com/suleiman/material/activities/PagerActivity.java
+//Icons were created by user Pause08 and downloaded from https://www.flaticon.com/packs/travel-110
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    @BindView(R.id.container) ViewPager mViewPager;
+    @BindView(R.id.intro_btn_next) ImageButton mNextBtn;
+    @BindView(R.id.intro_btn_skip) Button mSkipBtn;
+    @BindView(R.id.intro_btn_finish) Button mFinishBtn;
+    @BindView(R.id.intro_indicator_0) ImageView zero;
+    @BindView(R.id.intro_indicator_1) ImageView one;
+    @BindView(R.id.intro_indicator_2) ImageView two;
+    @BindView(R.id.main_content) CoordinatorLayout mCoordinator;
+    @BindColor(R.color.cyan) int color1;
+    @BindColor(R.color.orange) int color2;
+    @BindColor(R.color.green) int color3;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager mViewPager;
-    ImageButton mNextBtn;
-    Button mSkipBtn, mFinishBtn;
-    ImageView zero, one, two;
-    CoordinatorLayout mCoordinator;
-    ImageView[] indicators;
-    int page = 0;
+    private ImageView[] indicators;
+    private int page = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         setContentView(R.layout.activity_welcome);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
+        ButterKnife.bind(this);
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        mNextBtn = (ImageButton) findViewById(R.id.intro_btn_next);
-        mSkipBtn = (Button) findViewById(R.id.intro_btn_skip);
-        mFinishBtn = (Button) findViewById(R.id.intro_btn_finish);
-
-        zero = (ImageView) findViewById(R.id.intro_indicator_0);
-        one = (ImageView) findViewById(R.id.intro_indicator_1);
-        two = (ImageView) findViewById(R.id.intro_indicator_2);
-
-        mCoordinator = (CoordinatorLayout) findViewById(R.id.main_content);
-
         indicators = new ImageView[]{zero, one, two};
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         mViewPager.setCurrentItem(page);
         updateIndicators(page);
-
-        final int color1 = ContextCompat.getColor(this, R.color.cyan);
-        final int color2 = ContextCompat.getColor(this, R.color.orange);
-        final int color3 = ContextCompat.getColor(this, R.color.green);
 
         final int[] colorList = new int[]{color1, color2, color3};
 
@@ -95,9 +76,6 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                /*
-                color update
-                 */
                 int colorUpdate = (Integer) evaluator.evaluate(positionOffset, colorList[position], colorList[position == 2 ? position : position + 1]);
                 mViewPager.setBackgroundColor(colorUpdate);
 
@@ -176,52 +154,40 @@ public class WelcomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_welcome, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (item.getItemId() == R.id.action_settings) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
     public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
+
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        ImageView img;
+        @BindView(R.id.section_img) ImageView img;
+        @BindView(R.id.section_label) TextView textView;
+        @BindString(R.string.page_one_label) String label_one;
+        @BindString(R.string.page_two_label) String label_two;
+        @BindString(R.string.page_three_label) String label_three;
 
-        int[] bgs = new int[]{R.drawable.ic_flight_24dp, R.drawable.ic_mail_24dp, R.drawable.ic_explore_24dp};
+        int[] bgs = new int[]{R.drawable.ic_004_map, R.drawable.ic_008_gps, R.drawable.ic_017_compass};
+        String[] labels;
 
         public PlaceholderFragment() {
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
+            Bundle bundle = new Bundle();
+            bundle.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(bundle);
             return fragment;
         }
 
@@ -229,10 +195,9 @@ public class WelcomeActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_welcome, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-
-            img = (ImageView) rootView.findViewById(R.id.section_img);
+            ButterKnife.bind(this, rootView);
+            labels = new String[]{label_one, label_two, label_three};
+            textView.setText(labels[getArguments().getInt(ARG_SECTION_NUMBER) - 1]);
             img.setBackgroundResource(bgs[getArguments().getInt(ARG_SECTION_NUMBER) - 1]);
 
 
@@ -240,10 +205,6 @@ public class WelcomeActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -252,15 +213,12 @@ public class WelcomeActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
             return PlaceholderFragment.newInstance(position + 1);
 
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 3;
         }
 
