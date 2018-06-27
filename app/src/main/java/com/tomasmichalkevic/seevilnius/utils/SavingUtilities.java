@@ -3,7 +3,7 @@ package com.tomasmichalkevic.seevilnius.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class Utilities {
+public class SavingUtilities {
 
     private static final String PREFERENCES_FILE = "seevilnius_settings";
 

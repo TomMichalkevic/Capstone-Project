@@ -20,7 +20,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.tomasmichalkevic.seevilnius.utils.Utilities;
+import com.tomasmichalkevic.seevilnius.utils.SavingUtilities;
 
 import butterknife.BindColor;
 import butterknife.BindString;
@@ -122,7 +122,7 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 finish();
-                Utilities.saveSharedSetting(WelcomeActivity.this, MainActivity.PREF_USER_FIRST_TIME, "false");
+                SavingUtilities.saveSharedSetting(WelcomeActivity.this, MainActivity.PREF_USER_FIRST_TIME, "false");
             }
         });
 
@@ -131,7 +131,7 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
                 //  update 1st time pref
-                Utilities.saveSharedSetting(WelcomeActivity.this, MainActivity.PREF_USER_FIRST_TIME, "false");
+                SavingUtilities.saveSharedSetting(WelcomeActivity.this, MainActivity.PREF_USER_FIRST_TIME, "false");
 
             }
         });
