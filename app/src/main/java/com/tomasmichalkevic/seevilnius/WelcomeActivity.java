@@ -2,11 +2,7 @@ package com.tomasmichalkevic.seevilnius;
 
 import android.animation.ArgbEvaluator;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -172,13 +168,17 @@ public class WelcomeActivity extends AppCompatActivity {
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         @BindView(R.id.section_img) ImageView img;
-        @BindView(R.id.section_label) TextView textView;
+        @BindView(R.id.section_label) TextView sectionLabelTV;
+        @BindView(R.id.section_desc) TextView sectionDescTV;
         @BindString(R.string.page_one_label) String label_one;
         @BindString(R.string.page_two_label) String label_two;
         @BindString(R.string.page_three_label) String label_three;
+        @BindString(R.string.page_one_desc) String desc_one;
+        @BindString(R.string.page_two_desc) String desc_two;
+        @BindString(R.string.page_three_desc) String desc_three;
 
         int[] bgs = new int[]{R.drawable.ic_004_map, R.drawable.ic_008_gps, R.drawable.ic_017_compass};
-        String[] labels;
+        String[] labels, descriptions;
 
         public PlaceholderFragment() {
         }
@@ -197,7 +197,9 @@ public class WelcomeActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_welcome, container, false);
             ButterKnife.bind(this, rootView);
             labels = new String[]{label_one, label_two, label_three};
-            textView.setText(labels[getArguments().getInt(ARG_SECTION_NUMBER) - 1]);
+            descriptions = new String[]{desc_one, desc_two, desc_three};
+            sectionLabelTV.setText(labels[getArguments().getInt(ARG_SECTION_NUMBER) - 1]);
+            sectionDescTV.setText(descriptions[getArguments().getInt(ARG_SECTION_NUMBER) - 1]);
             img.setBackgroundResource(bgs[getArguments().getInt(ARG_SECTION_NUMBER) - 1]);
 
 
