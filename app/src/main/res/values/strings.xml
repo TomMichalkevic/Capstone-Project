@@ -8,4 +8,5 @@
     <string name="page_one_desc">Visiting any new city can be scary, but we\'re here to help with some guidance.</string>
     <string name="page_two_desc">Just pick your desired search radius and we will show you ideas on what to see in Vilnius area.</string>
     <string name="page_three_desc">We\'ll show you all the necessary distances to help you make up your mind on what to see first and some information on how to get there by public transport.</string>
+    <string name="title_activity_details">DetailsActivity</string>
 </resources>

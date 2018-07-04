@@ -4,11 +4,16 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.tomasmichalkevic.seevilnius"
-        minSdkVersion 27
+        minSdkVersion 26
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        applicationVariants.all { variant ->
+            variant.buildConfigField "String", "GOOGLE_API_KEY", getGoogleApiKey()
+            variant.buildConfigField "String", "TRAFI_API_KEY", getTrafiApiKey()
+        }
+        resValue "string", "google_api", getGoogleApiKey()
     }
     buildTypes {
         release {
@@ -26,10 +31,26 @@ dependencies {
     implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.google.android.gms:play-services-places:15.0.1'
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
+    implementation 'com.google.code.gson:gson:2.8.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.android.volley:volley:1.1.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+}
+
+static def getGoogleApiKey(){
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('secrets.properties')))
+    return props['GOOGLE_API_KEY']
+}
+
+static def getTrafiApiKey(){
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('secrets.properties')))
+    return props['TRAFI_API_KEY']
 }

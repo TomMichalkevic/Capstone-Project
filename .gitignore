@@ -12,3 +12,4 @@ proguard/
 *.log
 .navigation/
 captures/
+secrets.properties

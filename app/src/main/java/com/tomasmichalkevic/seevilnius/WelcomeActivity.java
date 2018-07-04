@@ -1,6 +1,7 @@
 package com.tomasmichalkevic.seevilnius;
 
 import android.animation.ArgbEvaluator;
+import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 
@@ -120,7 +121,9 @@ public class WelcomeActivity extends AppCompatActivity {
         mSkipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent();
+                intent.putExtra("welcomed", true);
+                setResult(1, intent);
                 finish();
                 SavingUtilities.saveSharedSetting(WelcomeActivity.this, MainActivity.PREF_USER_FIRST_TIME, "false");
             }
@@ -129,6 +132,9 @@ public class WelcomeActivity extends AppCompatActivity {
         mFinishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra("welcomed", true);
+                setResult(1, intent);
                 finish();
                 //  update 1st time pref
                 SavingUtilities.saveSharedSetting(WelcomeActivity.this, MainActivity.PREF_USER_FIRST_TIME, "false");
