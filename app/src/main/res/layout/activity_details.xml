@@ -43,16 +43,78 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/detailsNestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:id="@+id/detailsNestedScrollView">
+        android:theme="@style/AppTheme"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/detailsConstraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/detailsConstraintLayout">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+            <TextView
+                android:id="@+id/addressTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="Address:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/addressValueTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toLeftOf="@+id/addressTV"
+                app:layout_constraintTop_toBottomOf="@+id/addressTV" />
+
+            <TextView
+                android:id="@+id/ratingTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Rating:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="@+id/addressTV"
+                app:layout_constraintTop_toBottomOf="@+id/addressValueTV" />
+
+            <TextView
+                android:id="@+id/ratingValueTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="0.0"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toRightOf="@+id/ratingTV"
+                app:layout_constraintTop_toTopOf="@+id/ratingTV" />
+
+            <TextView
+                android:id="@+id/telephoneTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Telephone Number:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="@+id/addressTV"
+                app:layout_constraintTop_toBottomOf="@+id/ratingTV" />
+
+            <TextView
+                android:id="@+id/telephoneValueTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toRightOf="@+id/telephoneTV"
+                app:layout_constraintTop_toTopOf="@+id/telephoneTV" />
 
         </android.support.constraint.ConstraintLayout>
 
