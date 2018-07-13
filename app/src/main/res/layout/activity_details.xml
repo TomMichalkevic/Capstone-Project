@@ -116,6 +116,35 @@
                 app:layout_constraintLeft_toRightOf="@+id/telephoneTV"
                 app:layout_constraintTop_toTopOf="@+id/telephoneTV" />
 
+            <TextView
+                android:id="@+id/openTimesTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Opening Times:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="@+id/telephoneTV"
+                app:layout_constraintTop_toBottomOf="@+id/telephoneTV" />
+
+            <TextView
+                android:id="@+id/openTimesValueTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/openTimesTV"
+                app:layout_constraintTop_toTopOf="@+id/openTimesTV" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/review_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/openTimesValueTV">
+
+            </android.support.v7.widget.RecyclerView>
+
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v4.widget.NestedScrollView>

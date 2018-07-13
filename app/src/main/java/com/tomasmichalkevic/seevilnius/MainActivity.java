@@ -105,8 +105,6 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i(LOG_TAG, "onStart: " + (location==null));
-        Log.i(LOG_TAG, "onStart: ");
         if (!isUserFirstTime){
             getCurrentLocation();
         }
@@ -227,7 +225,6 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
         uri.appendQueryParameter("type", "museum");
         uri.appendQueryParameter("key", GOOGLE_API_KEY);
         String url = uri.build().toString();
-        Log.i(LOG_TAG, "getPlaces: " + url);
         places.clear();
         distance.clear();
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
