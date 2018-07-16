@@ -3,6 +3,7 @@ package com.tomasmichalkevic.seevilnius;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -14,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -65,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
     private long UPDATE_INTERVAL = 900000;
     private long FASTEST_INTERVAL = 300000;
     private static final String GOOGLE_API_KEY = BuildConfig.GOOGLE_API_KEY;
+    private int radius = 1000;
+    private SharedPreferences sharedPref;
 
     @BindView(R.id.places_recycler_view)
     RecyclerView placesRecyclerView;
@@ -73,6 +77,14 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        PreferenceManager.setDefaultValues(this, R.xml.pref_main, false);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        radius = sharedPref.getInt(SettingsActivity.KEY_PREF_RADIUS, 1) * 1000;
+        //Toast.makeText(this, radiusPref.toString(), Toast.LENGTH_SHORT).show();
+
+
         isUserFirstTime = Boolean.valueOf(SavingUtilities.readSharedSetting(MainActivity.this, PREF_USER_FIRST_TIME, "true"));
         Intent introIntent = new Intent(MainActivity.this, WelcomeActivity.class);
         introIntent.putExtra(PREF_USER_FIRST_TIME, isUserFirstTime);
@@ -109,6 +121,22 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
             getCurrentLocation();
         }
     }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        places.clear();
+//        distance.clear();
+//        if (!isUserFirstTime){
+//            if(places.size()==0 && distance.size()==0){
+//                getCurrentLocation();
+//                sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+//                radius = sharedPref.getInt(SettingsActivity.KEY_PREF_RADIUS, 1) * 1000;
+//                getPlaces();
+//            }
+//
+//        }
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -163,8 +191,19 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id){
+            case R.id.action_settings:{
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            case R.id.action_nearby_stops:{
+                Intent nearbyStopsIntent = new Intent(MainActivity.this, NearbyStationsActivity.class);
+                nearbyStopsIntent.putExtra("Lat", currentLat);
+                nearbyStopsIntent.putExtra("Lng", currentLng);
+                startActivity(nearbyStopsIntent);
+                return true;
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -200,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         // You can now create a LatLng Object for use with maps
         this.location = location;
         currentLat = location.getLatitude();
@@ -221,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
         uri.authority("maps.googleapis.com");
         uri.path("/maps/api/place/nearbysearch/json");
         uri.appendQueryParameter("location", location);
-        uri.appendQueryParameter("radius", "5000");
+        uri.appendQueryParameter("radius", String.valueOf(radius));
         uri.appendQueryParameter("type", "museum");
         uri.appendQueryParameter("key", GOOGLE_API_KEY);
         String url = uri.build().toString();
