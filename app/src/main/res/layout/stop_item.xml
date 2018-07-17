@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/stop_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toRightOf="@+id/stop_icon_iv"
+        app:layout_constraintTop_toTopOf="@+id/stop_icon_iv" />
+
+    <TextView
+        android:id="@+id/in_direction_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toRightOf="@+id/stop_name_tv"
+        app:layout_constraintTop_toTopOf="@+id/stop_name_tv" />
+
+    <TextView
+        android:id="@+id/stop_distance_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop Distance:"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toLeftOf="@+id/stop_name_tv"
+        app:layout_constraintTop_toBottomOf="@+id/stop_name_tv" />
+
+    <TextView
+        android:id="@+id/stop_distance_value_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/stop_distance_tv"
+        app:layout_constraintTop_toTopOf="@+id/stop_distance_tv" />
+
+    <ImageView
+        android:id="@+id/stop_icon_iv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:color/background_light" />
+
+
+</android.support.constraint.ConstraintLayout>

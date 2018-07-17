@@ -27,6 +27,8 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
@@ -72,13 +74,18 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
 
     @BindView(R.id.places_recycler_view)
     RecyclerView placesRecyclerView;
+    @BindView(R.id.adView)
+    AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
+        ButterKnife.bind(this);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        adView.loadAd(adRequest);
         PreferenceManager.setDefaultValues(this, R.xml.pref_main, false);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         radius = sharedPref.getInt(SettingsActivity.KEY_PREF_RADIUS, 1) * 1000;
@@ -92,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
         if (isUserFirstTime){
             startActivityForResult(introIntent, 1);
         }
-        ButterKnife.bind(this);
+
 
         RecyclerView.LayoutManager mLayoutManagerPlaces = new LinearLayoutManager(this);
 
@@ -115,28 +122,18 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         if (!isUserFirstTime){
             getCurrentLocation();
         }
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        places.clear();
-//        distance.clear();
-//        if (!isUserFirstTime){
-//            if(places.size()==0 && distance.size()==0){
-//                getCurrentLocation();
-//                sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-//                radius = sharedPref.getInt(SettingsActivity.KEY_PREF_RADIUS, 1) * 1000;
-//                getPlaces();
-//            }
-//
-//        }
-//    }
+    @Override
+    protected void onStart() {
+        Toast.makeText(this, "onResume now", Toast.LENGTH_SHORT).show();
+        super.onStart();
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -295,29 +292,5 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
             i++;
         }
     }
-
-//    public void getStopsNearby(String lat, String lng){
-//        Uri.Builder uri = new Uri.Builder();
-//        uri.scheme("http");
-//        uri.authority("api-ext.trafi.com");
-//        uri.path("/stops/nearby");
-//        uri.appendQueryParameter("lat", lat);
-//        uri.appendQueryParameter("lng", lng);
-//        uri.appendQueryParameter("api_key", "DUMMY");
-//        String url = uri.build().toString();
-//        StringRequest stopsRequest = new StringRequest(url, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                Log.i(LOG_TAG, "onResponse: " + response);
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.e(LOG_TAG, "Error requesting stops nearby", error);
-//            }
-//        });
-//
-//        NetworkRequestQueue.getInstance(this).addToRequestQueue(stopsRequest);
-//    }
 
 }
