@@ -22,7 +22,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.facebook.stetho.Stetho;
-import com.google.android.gms.location.places.Place;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.tomasmichalkevic.seevilnius.data.AppExecutors;
@@ -30,32 +29,39 @@ import com.tomasmichalkevic.seevilnius.data.Result;
 import com.tomasmichalkevic.seevilnius.data.db.AppDatabase;
 import com.tomasmichalkevic.seevilnius.data.db.PlaceEntry;
 import com.tomasmichalkevic.seevilnius.data.details.Details;
-import com.tomasmichalkevic.seevilnius.data.details.DetailsResult;
 import com.tomasmichalkevic.seevilnius.data.details.Review;
 import com.tomasmichalkevic.seevilnius.utils.NetworkRequestQueue;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    @BindView(R.id.title_iv) ImageView titleBackdrop;
-    @BindView(R.id.visit_fab) FloatingActionButton fab;
+    @BindView(R.id.title_iv)
+    ImageView titleBackdrop;
+    @BindView(R.id.visit_fab)
+    FloatingActionButton fab;
     @BindView(R.id.collapsingDetails) CollapsingToolbarLayout detailsLayout;
     @BindView(R.id.detailsCoordinatorLayout) CoordinatorLayout detailsCoordinatorLayout;
-    @BindView(R.id.ratingValueTV) TextView ratingValueTV;
-    @BindView(R.id.telephoneValueTV) TextView telephoneValueTV;
-    @BindView(R.id.addressValueTV) TextView addressValueTV;
-    @BindView(R.id.openTimesTV) TextView openingTimesTV;
-    @BindView(R.id.openTimesValueTV) TextView openingTimesValueTV;
-    @BindView(R.id.review_recycler_view) RecyclerView reviewRecyclerView;
+    @BindView(R.id.ratingValueTV)
+    TextView ratingValueTV;
+    @BindView(R.id.telephoneValueTV)
+    TextView telephoneValueTV;
+    @BindView(R.id.addressValueTV)
+    TextView addressValueTV;
+    @BindView(R.id.openTimesTV)
+    TextView openingTimesTV;
+    @BindView(R.id.openTimesValueTV)
+    TextView openingTimesValueTV;
+    @BindView(R.id.review_recycler_view)
+    RecyclerView reviewRecyclerView;
     private Result result = new Result();
     private static final String GOOGLE_API_KEY = BuildConfig.GOOGLE_API_KEY;
-    private RecyclerView.LayoutManager layoutManagerReviews;
     private ReviewAdapter reviewAdapter;
     private final List<Review> reviewList = new ArrayList<>();
     private Details detailsCopy = new Details();
@@ -76,7 +82,6 @@ public class DetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Intent intent = getIntent();
         if (intent!=null){
-            Log.i(LOG_TAG, "onCreate: not null, had extra: " + intent.hasExtra("data"));
             result = (new Gson()).fromJson(intent.getStringExtra("data"), result.getClass());
             if(result.getPhotos()==null){
                 titleBackdrop.setImageResource(R.drawable.ic_004_map);
@@ -86,7 +91,7 @@ public class DetailsActivity extends AppCompatActivity {
             ratingValueTV.setText(Double.toString(result.getRating()));
             reviewAdapter = new ReviewAdapter(reviewList);
             reviewRecyclerView.setHasFixedSize(true);
-            layoutManagerReviews = new LinearLayoutManager(this);
+            RecyclerView.LayoutManager layoutManagerReviews = new LinearLayoutManager(this);
             reviewRecyclerView.setLayoutManager(layoutManagerReviews);
             reviewRecyclerView.setAdapter(reviewAdapter);
             reviewList.clear();
@@ -138,10 +143,10 @@ public class DetailsActivity extends AppCompatActivity {
                 }
             });
         }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
-    public String getPhotoURL(String reference){
+    private String getPhotoURL(String reference){
         Uri.Builder uri = new Uri.Builder();
         uri.scheme("https");
         uri.authority("maps.googleapis.com");
@@ -153,7 +158,7 @@ public class DetailsActivity extends AppCompatActivity {
         return uri.build().toString();
     }
 
-    public void getPlaceDetails(String placeID){
+    private void getPlaceDetails(String placeID){
         Uri.Builder uri = new Uri.Builder();
         uri.scheme("https");
         uri.authority("maps.googleapis.com");
@@ -167,7 +172,7 @@ public class DetailsActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i(LOG_TAG, "onResponse: " + response.toString());
+                Log.i(LOG_TAG, "onResponse: " + response);
                 details[0] = new Gson().fromJson(response, Details.class);
                 telephoneValueTV.setText(details[0].getResult().getInternationalPhoneNumber());
                 addressValueTV.setText(details[0].getResult().getFormattedAddress());
@@ -195,7 +200,7 @@ public class DetailsActivity extends AppCompatActivity {
         NetworkRequestQueue.getInstance(this).addToRequestQueue(request);
     }
 
-    public String transformToMultiline(List<String> list){
+    private String transformToMultiline(List<String> list){
         StringBuilder builder = new StringBuilder("");
         for(String s: list){
             builder.append(s);

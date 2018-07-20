@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.facebook.stetho.Stetho;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.location.LocationCallback;
@@ -35,7 +36,6 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.location.places.Place;
 import com.google.gson.Gson;
 import com.tomasmichalkevic.seevilnius.data.PlacesAPIResult;
 import com.tomasmichalkevic.seevilnius.data.Result;
@@ -55,22 +55,18 @@ import static com.google.android.gms.location.LocationServices.getFusedLocationP
 public class MainActivity extends AppCompatActivity implements OnRequestPermissionsResultCallback{
 
     public static final String PREF_USER_FIRST_TIME = "user_first_time";
-    public static final String LOG_TAG = MainActivity.class.getSimpleName();
-    private List<Result> places = new ArrayList<>();
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private final List<Result> places = new ArrayList<>();
     private static final int PERMISSIONS_REQUEST_FINE_LOCATION = 111;
-    boolean isUserFirstTime;
+    private boolean isUserFirstTime;
     private double currentLat = 0;
     private double currentLng = 0;
     private LocationManager locationManager;
     private PlacesCardAdapter placesCardAdapter;
     private Location location;
-    private List<Float> distance = new ArrayList<>();
-    private LocationRequest locationRequest;
-    private long UPDATE_INTERVAL = 900000;
-    private long FASTEST_INTERVAL = 300000;
+    private final List<Float> distance = new ArrayList<>();
     private static final String GOOGLE_API_KEY = BuildConfig.GOOGLE_API_KEY;
     private int radius = 1000;
-    private SharedPreferences sharedPref;
 
     @BindView(R.id.places_recycler_view)
     RecyclerView placesRecyclerView;
@@ -81,13 +77,14 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Stetho.initializeWithDefaults(this);
         ButterKnife.bind(this);
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
         adView.loadAd(adRequest);
         PreferenceManager.setDefaultValues(this, R.xml.pref_main, false);
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         radius = sharedPref.getInt(SettingsActivity.KEY_PREF_RADIUS, 1) * 1000;
         //Toast.makeText(this, radiusPref.toString(), Toast.LENGTH_SHORT).show();
 
@@ -142,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
             getPlaces();
         }else{
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-            Toast.makeText(this, "You have to grant location permission. Restart the app and try again", Toast.LENGTH_LONG);
+            Toast.makeText(this, "You have to grant location permission. Restart the app and try again", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -154,12 +151,11 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
         }
     }
 
-    private LocationListener locationListener = new LocationListener() {
+    private final LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
             if (location != null) {
                 locationManager.removeUpdates(locationListener);
-            } else {
             }
         }
 
@@ -206,16 +202,18 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
         return super.onOptionsItemSelected(item);
     }
 
-    public void getCurrentLocation() {
+    private void getCurrentLocation() {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this,
                     new String[]{ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_FINE_LOCATION);
         }else{
-            locationRequest = new LocationRequest();
+            LocationRequest locationRequest = new LocationRequest();
             locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            long UPDATE_INTERVAL = 900000;
             locationRequest.setInterval(UPDATE_INTERVAL);
+            long FASTEST_INTERVAL = 300000;
             locationRequest.setFastestInterval(FASTEST_INTERVAL);
             LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
             builder.addLocationRequest(locationRequest);
@@ -232,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
         }
     }
 
-    public void onLocationChanged(Location location) {
+    private void onLocationChanged(Location location) {
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
@@ -244,14 +242,12 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
         getPlaces();
     }
 
-    public void getPlaces(){
+    private void getPlaces(){
         final ProgressBar progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleInverse);
         progressBar.setVisibility(View.VISIBLE);
-        StringBuilder builder = new StringBuilder("");
-        builder.append(currentLat);
-        builder.append(",");
-        builder.append(currentLng);
-        final String location = builder.toString();
+        final String location = "" + currentLat +
+                "," +
+                currentLng;
         Uri.Builder uri = new Uri.Builder();
         uri.scheme("https");
         uri.authority("maps.googleapis.com");
@@ -266,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                places.addAll(new Gson().fromJson(response, new PlacesAPIResult().getClass()).getResults());
+                places.addAll(new Gson().fromJson(response, PlacesAPIResult.class).getResults());
                 updateDistances(places);
                 placesCardAdapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);

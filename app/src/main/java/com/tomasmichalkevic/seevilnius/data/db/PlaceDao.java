@@ -7,6 +7,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
+import android.database.Cursor;
 
 import java.util.List;
 
@@ -15,6 +16,9 @@ public interface PlaceDao {
 
     @Query("SELECT * FROM place ORDER BY visited_time")
     LiveData<List<PlaceEntry>> loadAllPlaces();
+
+    @Query("SELECT * FROM place ORDER BY visited_time DESC")
+    List<PlaceEntry> loadAllPlacesAsList();
 
     @Insert
     void insertPlace(PlaceEntry taskEntry);
@@ -30,4 +34,7 @@ public interface PlaceDao {
 
     @Query("SELECT * FROM place WHERE place_id = :place_id")
     LiveData<PlaceEntry> loadPlaceByPlaceId(String place_id);
+
+    @Query("SELECT * FROM place WHERE place_id = :place_id")
+    Cursor loadPlaceByPlaceIdWithProvider(String place_id);
 }

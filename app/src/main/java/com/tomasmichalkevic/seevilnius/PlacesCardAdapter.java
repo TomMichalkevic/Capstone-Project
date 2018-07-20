@@ -11,11 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.location.places.GeoDataApi;
-import com.google.android.gms.location.places.GeoDataClient;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.PlacePhotoMetadataResult;
-import com.google.android.gms.tasks.Task;
 import com.squareup.picasso.Picasso;
 import com.tomasmichalkevic.seevilnius.data.Result;
 
@@ -67,7 +62,7 @@ public class PlacesCardAdapter extends RecyclerView.Adapter<PlacesCardAdapter.Vi
         @BindView(R.id.iv_place) ImageView placeIV;
         @BindView(R.id.place_card_view) CardView place_card_view;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -97,7 +92,7 @@ public class PlacesCardAdapter extends RecyclerView.Adapter<PlacesCardAdapter.Vi
 
         }
 
-        public String getPhotoURL(String reference){
+        String getPhotoURL(String reference){
             Uri.Builder uri = new Uri.Builder();
             uri.scheme("https");
             uri.authority("maps.googleapis.com");

@@ -34,7 +34,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         Review review = reviewList.get(position);
         holder.author.setText(review.getAuthorName());
         holder.content.setText(review.getText());
-        holder.posted.setText(new StringBuilder().append("Posted: ").append(review.getRelativeTimeDescription()).toString());
+        holder.posted.setText("Posted: " + review.getRelativeTimeDescription());
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         @BindView(R.id.reviewContentTV) TextView content;
         @BindView(R.id.postedValueTV) TextView posted;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }

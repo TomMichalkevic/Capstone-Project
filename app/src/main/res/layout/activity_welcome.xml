@@ -56,7 +56,8 @@
                 android:layout_height="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@drawable/indicator_unselected" />
+                android:background="@drawable/indicator_unselected"
+                android:contentDescription="Intro Indicator Zero" />
 
             <ImageView
                 android:id="@+id/intro_indicator_1"
@@ -64,14 +65,16 @@
                 android:layout_height="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@drawable/indicator_unselected" />
+                android:background="@drawable/indicator_unselected"
+                android:contentDescription="Intro Indicator One" />
 
             <ImageView
                 android:id="@+id/intro_indicator_2"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="8dp"
                 android:layout_height="8dp"
-                android:background="@drawable/indicator_unselected" />
+                android:background="@drawable/indicator_unselected"
+                android:contentDescription="Intro Indicator Two" />
 
         </LinearLayout>
 
@@ -94,7 +97,8 @@
             android:layout_gravity="end|center"
             android:padding="@dimen/activity_horizontal_margin"
             android:src="@drawable/ic_chevron_right_24dp"
-            android:tint="@android:color/white" />
+            android:tint="@android:color/white"
+            android:contentDescription="Intro Next Button" />
 
 
     </FrameLayout>

@@ -2,14 +2,14 @@ package com.tomasmichalkevic.seevilnius.data.db;
 
 import android.arch.persistence.room.TypeConverter;
 
-public class BooleanConverter {
+class BooleanConverter {
     @TypeConverter
     public static Boolean toBoolean(int value) {
-        return value == 1 ? true : false;
+        return value == 1;
     }
 
     @TypeConverter
     public static int toInteger(Boolean value) {
-        return value == true ? 1 : 0;
+        return value ? 1 : 0;
     }
 }

@@ -9,7 +9,7 @@ import com.android.volley.toolbox.Volley;
 public class NetworkRequestQueue {
 
     private static NetworkRequestQueue instance;
-    private Context context;
+    private final Context context;
     private RequestQueue requestQueue;
 
     private NetworkRequestQueue(Context context){
@@ -17,7 +17,7 @@ public class NetworkRequestQueue {
         this.requestQueue = getRequestQueue();
     }
 
-    public RequestQueue getRequestQueue() {
+    private RequestQueue getRequestQueue() {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(context.getApplicationContext());
         }

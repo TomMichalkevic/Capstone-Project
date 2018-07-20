@@ -2,8 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_horizontal_margin"
-    tools:context="com.suleiman.material.activities.PagerActivity$PlaceholderFragment">
+    android:padding="@dimen/activity_horizontal_margin">
 
 
     <FrameLayout
@@ -18,7 +17,8 @@
             android:adjustViewBounds="true"
             android:alpha="0.30"
             android:background="@drawable/ic_004_map"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            android:contentDescription="Section Image" />
 
 
     </FrameLayout>

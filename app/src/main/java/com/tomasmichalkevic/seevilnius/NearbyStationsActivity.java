@@ -1,16 +1,11 @@
 package com.tomasmichalkevic.seevilnius;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -21,14 +16,12 @@ import com.tomasmichalkevic.seevilnius.data.trafi.TrafiResponse;
 import com.tomasmichalkevic.seevilnius.utils.NetworkRequestQueue;
 
 import java.util.ArrayList;
-
-import static com.tomasmichalkevic.seevilnius.MainActivity.LOG_TAG;
+import java.util.Objects;
 
 public class NearbyStationsActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
     private static final String LOG_TAG = NearbyStationsActivity.class.getSimpleName();
-    private ArrayList<Stop> stopsList = new ArrayList<>();
+    private final ArrayList<Stop> stopsList = new ArrayList<>();
     private static final String TRAFI_API_KEY = BuildConfig.TRAFI_API_KEY;
     private StopsAdapter stopsAdapter;
 
@@ -36,23 +29,25 @@ public class NearbyStationsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby_stations);
-        recyclerView = findViewById(R.id.stops_recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.stops_recycler_view);
         stopsAdapter = new StopsAdapter(stopsList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(stopsAdapter);
         recyclerView.setHasFixedSize(true);
-        getStopsNearby("54.635497458", "25.285998856");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getIntent().hasExtra("Lat") && getIntent().hasExtra("Lng")){
+            getStopsNearby(getIntent().getDoubleExtra("Lat", 0.0), getIntent().getDoubleExtra("Lng", 0.0));
+        }
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
-        public void getStopsNearby(String lat, String lng){
+        private void getStopsNearby(double lat, double lng){
         Uri.Builder uri = new Uri.Builder();
         uri.scheme("http");
         uri.authority("api-ext.trafi.com");
         uri.path("/stops/nearby");
-        uri.appendQueryParameter("lat", lat);
-        uri.appendQueryParameter("lng", lng);
-        uri.appendQueryParameter("radius", "1000");
+        uri.appendQueryParameter("lat", String.valueOf(lat));
+        uri.appendQueryParameter("lng", String.valueOf(lng));
+        uri.appendQueryParameter("radius", "500");
         uri.appendQueryParameter("api_key", TRAFI_API_KEY);
         String url = uri.build().toString();
         Log.i(LOG_TAG, "onResponse: " + url);

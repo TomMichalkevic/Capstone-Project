@@ -10,6 +10,7 @@ import java.util.Date;
 @Entity(tableName = "place")
 public class PlaceEntry {
 
+    public static final String TABLE_NAME = "place";
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String place_id;

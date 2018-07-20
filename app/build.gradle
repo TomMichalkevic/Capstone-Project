@@ -1,3 +1,5 @@
+//noinspection GradleCompatible
+//noinspection GradleCompatible
 apply plugin: 'com.android.application'
 
 android {
@@ -15,8 +17,19 @@ android {
         }
         resValue "string", "google_api", getGoogleApiKey()
     }
+
+    signingConfigs {
+        release {
+            storeFile file("../keystore.jks")
+            storePassword "release123"
+            keyAlias "keystore"
+            keyPassword "release123"
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -52,13 +65,13 @@ dependencies {
 }
 
 static def getGoogleApiKey() {
-    def Properties props = new Properties()
+    Properties props = new Properties()
     props.load(new FileInputStream(new File('secrets.properties')))
     return props['GOOGLE_API_KEY']
 }
 
 static def getTrafiApiKey() {
-    def Properties props = new Properties()
+    Properties props = new Properties()
     props.load(new FileInputStream(new File('secrets.properties')))
     return props['TRAFI_API_KEY']
 }

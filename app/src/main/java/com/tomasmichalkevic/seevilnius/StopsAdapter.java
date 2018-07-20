@@ -1,20 +1,14 @@
 package com.tomasmichalkevic.seevilnius;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-import com.tomasmichalkevic.seevilnius.data.Result;
 import com.tomasmichalkevic.seevilnius.data.trafi.Stop;
 
 import java.util.ArrayList;
@@ -24,7 +18,7 @@ import butterknife.ButterKnife;
 
 public class StopsAdapter extends RecyclerView.Adapter<StopsAdapter.ViewHolder> {
 
-    private ArrayList<Stop> stopsList;
+    private final ArrayList<Stop> stopsList;
 
     public StopsAdapter(ArrayList<Stop> stopsList) {
         this.stopsList = stopsList;
@@ -59,7 +53,7 @@ public class StopsAdapter extends RecyclerView.Adapter<StopsAdapter.ViewHolder> 
         @BindView(R.id.stop_icon_iv) ImageView stopIconIV;
 
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
