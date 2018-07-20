@@ -11,6 +11,26 @@
     <string name="title_activity_details">DetailsActivity</string>
     <string name="title_activity_nearby_stations">NearbyStationsActivity</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="nearby_stops_title">Nearby Stops</string>
+    <string name="google_logo_iv_content_desc">Google Logo</string>
+    <string name="place_picture">Place Picture</string>
+    <string name="address_tv_text">Address:</string>
+    <string name="rating_tv_text">Rating:</string>
+    <string name="rating_value_tv_text">0.0</string>
+    <string name="telephone_number_tv">Telephone Number:</string>
+    <string name="opening_times_tv">Opening Times:</string>
+    <string name="place_photo_content_desc">Place Photo</string>
+    <string name="section_image_iv_content_desc">Section Image</string>
+    <string name="skip_button_text">Skip</string>
+    <string name="intro_indicator_zero_content_desc">Intro Indicator Zero</string>
+    <string name="intro_indicator_one_content_desc">Intro Indicator One</string>
+    <string name="intro_indicator_two_content_desc">Intro Indicator Two</string>
+    <string name="finish_button_text">Finish</string>
+    <string name="intro_next_button_content_desc">Intro Next Button</string>
+    <string name="last_visited_label_tv">Last visited:</string>
+    <string name="last_visited_value_text">Your last visited place will appear here</string>
+    <string name="stop_distance_tv_text">Stop Distance:</string>
+    <string name="stop_icon_iv_content_desc">Stop Icon</string>
 
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 </resources>

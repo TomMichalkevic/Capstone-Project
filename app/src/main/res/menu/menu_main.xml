@@ -10,6 +10,6 @@
     <item
         android:id="@+id/action_nearby_stops"
         android:orderInCategory="100"
-        android:title="Nearby Stops"
+        android:title="@string/nearby_stops_title"
         app:showAsAction="never" />
 </menu>

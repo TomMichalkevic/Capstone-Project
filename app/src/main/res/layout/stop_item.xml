@@ -26,7 +26,7 @@
         android:id="@+id/stop_distance_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Stop Distance:"
+        android:text="@string/stop_distance_tv_text"
         android:textSize="15sp"
         app:layout_constraintLeft_toLeftOf="@+id/stop_name_tv"
         app:layout_constraintTop_toBottomOf="@+id/stop_name_tv" />
@@ -47,7 +47,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:color/background_light"
-        android:contentDescription="Stop Icon" />
+        android:contentDescription="@string/stop_icon_iv_content_desc" />
 
 
 </android.support.constraint.ConstraintLayout>

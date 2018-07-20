@@ -13,7 +13,7 @@
         android:layout_margin="8dp"
         android:layout_weight="1"
         android:background="#09C"
-        android:text="Last visited:"
+        android:text="@string/last_visited_label_tv"
         android:textColor="#ffffff"
         android:textSize="18sp"
         android:textStyle="bold|italic" />
@@ -25,7 +25,7 @@
         android:layout_margin="8dp"
         android:background="#09C"
         android:elevation="0dp"
-        android:text="Your last visited place will appear here"
+        android:text="@string/last_visited_value_text"
         android:textColor="#ffffff"
         android:textSize="18sp"
         android:textStyle="bold|italic" />

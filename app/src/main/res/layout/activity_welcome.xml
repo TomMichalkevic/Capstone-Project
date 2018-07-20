@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center"
-            android:text="Skip"
+            android:text="@string/skip_button_text"
             android:textColor="@android:color/white" />
 
         <LinearLayout
@@ -57,7 +57,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:background="@drawable/indicator_unselected"
-                android:contentDescription="Intro Indicator Zero" />
+                android:contentDescription="@string/intro_indicator_zero_content_desc" />
 
             <ImageView
                 android:id="@+id/intro_indicator_1"
@@ -66,7 +66,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:background="@drawable/indicator_unselected"
-                android:contentDescription="Intro Indicator One" />
+                android:contentDescription="@string/intro_indicator_one_content_desc" />
 
             <ImageView
                 android:id="@+id/intro_indicator_2"
@@ -74,7 +74,7 @@
                 android:layout_width="8dp"
                 android:layout_height="8dp"
                 android:background="@drawable/indicator_unselected"
-                android:contentDescription="Intro Indicator Two" />
+                android:contentDescription="@string/intro_indicator_two_content_desc" />
 
         </LinearLayout>
 
@@ -85,7 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center"
-            android:text="Finish"
+            android:text="@string/finish_button_text"
             android:textColor="@android:color/white"
             android:visibility="gone" />
 
@@ -98,7 +98,7 @@
             android:padding="@dimen/activity_horizontal_margin"
             android:src="@drawable/ic_chevron_right_24dp"
             android:tint="@android:color/white"
-            android:contentDescription="Intro Next Button" />
+            android:contentDescription="@string/intro_next_button_content_desc" />
 
 
     </FrameLayout>

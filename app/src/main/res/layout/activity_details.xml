@@ -13,7 +13,7 @@
         android:layout_gravity="bottom|right|center"
         android:layout_margin="10dp"
         app:srcCompat="@drawable/powered_by_google_on_white"
-        android:contentDescription="Google Logo" />
+        android:contentDescription="@string/google_logo_iv_content_desc" />
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/detailsAppBar"
@@ -40,7 +40,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"
-                android:contentDescription="Place Picture" />
+                android:contentDescription="@string/place_picture" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/detailsToolbar"
@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:text="Address:"
+                android:text="@string/address_tv_text"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Rating:"
+                android:text="@string/rating_tv_text"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="@+id/addressTV"
@@ -101,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="0.0"
+                android:text="@string/rating_value_tv_text"
                 android:textSize="20sp"
                 app:layout_constraintLeft_toRightOf="@+id/ratingTV"
                 app:layout_constraintTop_toTopOf="@+id/ratingTV" />
@@ -111,7 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Telephone Number:"
+                android:text="@string/telephone_number_tv"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="@+id/addressTV"
@@ -131,7 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Opening Times:"
+                android:text="@string/opening_times_tv"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="@+id/telephoneTV"

@@ -41,6 +41,6 @@
         ads:layout_constraintEnd_toEndOf="@+id/adView"
         ads:layout_constraintStart_toStartOf="@+id/adView"
         app:srcCompat="@drawable/powered_by_google_on_white"
-        android:contentDescription="Google Logo" />
+        android:contentDescription="@string/google_logo_iv_content_desc" />
 
 </android.support.constraint.ConstraintLayout>
