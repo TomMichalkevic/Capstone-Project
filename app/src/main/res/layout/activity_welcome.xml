@@ -55,7 +55,6 @@
                 android:layout_width="8dp"
                 android:layout_height="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:background="@drawable/indicator_unselected"
                 android:contentDescription="@string/intro_indicator_zero_content_desc" />
 
@@ -64,7 +63,6 @@
                 android:layout_width="8dp"
                 android:layout_height="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:background="@drawable/indicator_unselected"
                 android:contentDescription="@string/intro_indicator_one_content_desc" />
 

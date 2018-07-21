@@ -86,7 +86,7 @@ public class LastVisitedPlaceWidget extends AppWidgetProvider {
 
     public static class WidgetUpdateService extends Service {
 
-        WidgetUpdateService() {
+        public WidgetUpdateService() {
             super();
         }
 

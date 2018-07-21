@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
         PreferenceManager.setDefaultValues(this, R.xml.pref_main, false);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         radius = sharedPref.getInt(SettingsActivity.KEY_PREF_RADIUS, 1) * 1000;
-        //Toast.makeText(this, radiusPref.toString(), Toast.LENGTH_SHORT).show();
 
 
         isUserFirstTime = Boolean.valueOf(SavingUtilities.readSharedSetting(MainActivity.this, PREF_USER_FIRST_TIME, "true"));
@@ -105,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
         placesCardAdapter = new PlacesCardAdapter(places, distance, new PlacesCardAdapter.ItemClickListener() {
             @Override
             public void onItemClick(Result view) {
-                Toast.makeText(MainActivity.this, "Clicked on card! " + view.getName(), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
                 intent.putExtra("data", new Gson().toJson(view));
                 startActivity(intent);
@@ -128,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
 
     @Override
     protected void onStart() {
-        Toast.makeText(this, "onResume now", Toast.LENGTH_SHORT).show();
         super.onStart();
     }
 
@@ -139,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
             getPlaces();
         }else{
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-            Toast.makeText(this, "You have to grant location permission. Restart the app and try again", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.location_reguest_message), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -234,8 +231,6 @@ public class MainActivity extends AppCompatActivity implements OnRequestPermissi
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
-        //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        // You can now create a LatLng Object for use with maps
         this.location = location;
         currentLat = location.getLatitude();
         currentLng = location.getLongitude();

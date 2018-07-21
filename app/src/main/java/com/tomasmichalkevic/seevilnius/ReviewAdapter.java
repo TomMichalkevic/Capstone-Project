@@ -34,7 +34,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         Review review = reviewList.get(position);
         holder.author.setText(review.getAuthorName());
         holder.content.setText(review.getText());
-        holder.posted.setText("Posted: " + review.getRelativeTimeDescription());
+        holder.posted.setText(holder.posted.getContext().getString(R.string.posted) + review.getRelativeTimeDescription());
     }
 
     @Override

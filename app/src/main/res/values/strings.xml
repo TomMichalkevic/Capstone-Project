@@ -31,6 +31,11 @@
     <string name="last_visited_value_text">Your last visited place will appear here</string>
     <string name="stop_distance_tv_text">Stop Distance:</string>
     <string name="stop_icon_iv_content_desc">Stop Icon</string>
+    <string name="posted">Posted: </string>
+    <string name="location_reguest_message">You have to grant location permission. Restart the app and try again</string>
+    <string name="marked_visited">Marked visited!</string>
+    <string name="already_marked_visited">Already marked visited!</string>
+    <string name="fab_visited">Visited Floating Button</string>
 
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 </resources>

@@ -123,11 +123,11 @@ public class DetailsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(final View view) {
                     if(isMarkedVisited){
-                        Snackbar.make(view, "Already marked visited!", Snackbar.LENGTH_LONG)
+                        Snackbar.make(view, getString(R.string.already_marked_visited), Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                     }else{
                         fab.setImageDrawable(getResources().getDrawable(android.R.drawable.btn_star_big_on));
-                        Snackbar.make(view, "Marked visited!", Snackbar.LENGTH_LONG)
+                        Snackbar.make(view, getString(R.string.marked_visited), Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         isMarkedVisited = true;
                         Date date = new Date();

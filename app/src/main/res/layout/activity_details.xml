@@ -6,15 +6,6 @@
     android:theme="@style/Theme.Design"
     android:id="@+id/detailsCoordinatorLayout">
 
-    <ImageView
-        android:id="@+id/google_logo_iv"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right|center"
-        android:layout_margin="10dp"
-        app:srcCompat="@drawable/powered_by_google_on_white"
-        android:contentDescription="@string/google_logo_iv_content_desc" />
-
     <android.support.design.widget.AppBarLayout
         android:id="@+id/detailsAppBar"
         android:layout_width="match_parent"
@@ -146,6 +137,16 @@
                 app:layout_constraintStart_toEndOf="@+id/openTimesTV"
                 app:layout_constraintTop_toTopOf="@+id/openTimesTV" />
 
+            <ImageView
+                android:id="@+id/google_logo_iv"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:contentDescription="@string/google_logo_iv_content_desc"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/powered_by_google_on_white" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/review_recycler_view"
                 android:layout_width="match_parent"
@@ -161,6 +162,7 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/visit_fab"
+        android:contentDescription="@string/fab_visited"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/FAMarginEnd"
