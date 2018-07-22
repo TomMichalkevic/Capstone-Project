@@ -2,6 +2,7 @@ package com.tomasmichalkevic.seevilnius;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -98,11 +99,13 @@ public class DetailsActivity extends AppCompatActivity {
             placeID = result.getPlaceId();
             getPlaceDetails(result.getPlaceId());
             reviewAdapter.notifyDataSetChanged();
-            final LiveData<PlaceEntry> place = db.placeDao().loadPlaceByPlaceId(result.getPlaceId());
-            place.observe(this, new Observer<PlaceEntry>() {
+            GetPlaceViewModelFactory factory = new GetPlaceViewModelFactory(db, result.getPlaceId());
+            final GetPlaceViewModel viewModel
+                    = ViewModelProviders.of(this, factory).get(GetPlaceViewModel.class);
+            viewModel.getPlace().observe(this, new Observer<PlaceEntry>() {
                 @Override
                 public void onChanged(@Nullable PlaceEntry placeEntry) {
-                    place.removeObserver(this);
+                    viewModel.getPlace().removeObserver(this);
                     Log.i(LOG_TAG, "onChanged STUFF: getting places that are present");
                     Log.d(LOG_TAG, "Receiving database update from LiveData");
                     if(placeEntry!=null){
